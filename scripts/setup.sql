@@ -83,3 +83,15 @@ GRANT INSERT ON EVENT TABLE DEMO_DB.INTEGRATIONS.DEMO_EVENTS TO ROLE DEMO_ROLE;
 
 ALTER ACCOUNT SET EVENT_TABLE = DEMO_DB.INTEGRATIONS.DEMO_EVENTS;
 ALTER DATABASE DEMO_DB SET LOG_LEVEL = INFO;
+
+-- ----------------------------------------------------------------------------
+-- Create Network Rule for Github actions
+-- ----------------------------------------------------------------------------
+CREATE NETWORK POLICY github_actions_policy
+  ALLOWED_NETWORK_RULE_LIST = (
+    'SNOWFLAKE.NETWORK_SECURITY.GITHUBACTIONS_GLOBAL'
+  )
+  BLOCKED_NETWORK_RULE_LIST = ();
+
+ALTER USER ADMIN 
+  SET NETWORK_POLICY = github_actions_policy;
